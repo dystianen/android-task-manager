@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.MainActivity">
+
+    <!-- Header Container -->
+    <LinearLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:background="@drawable/bg_header_rounded"
+        android:layout_alignParentTop="true">
+
+        <!-- Judul -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tugas Saya"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#4477AA"
+            android:layout_gravity="center_horizontal" />
+
+        <!-- Tombol Filter Tanggal -->
+        <LinearLayout
+            android:id="@+id/layoutFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <android.widget.Button
+                android:id="@+id/btnKemarin"
+                android:text="Kemarin"
+                android:textColor="@android:color/white"
+                android:background="@drawable/bg_filter_button"
+                android:layout_marginHorizontal="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.widget.Button
+                android:id="@+id/btnHariIni"
+                android:text="Hari Ini"
+                android:textColor="@android:color/white"
+                android:background="@drawable/bg_filter_button_active"
+                android:layout_marginHorizontal="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.widget.Button
+                android:id="@+id/btnBesok"
+                android:text="Besok"
+                android:textColor="@android:color/white"
+                android:background="@drawable/bg_filter_button"
+                android:layout_marginHorizontal="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Daftar Tugas -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewTasks"
+        android:layout_below="@id/layoutHeader"
+        android:layout_above="@id/fabAddTask"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Tombol Tambah -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="Tambah Tugas"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="#5A729A"
+        app:tint="@android:color/white" />
+</RelativeLayout>

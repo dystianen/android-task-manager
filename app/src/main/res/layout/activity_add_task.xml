@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    tools:context=".ui.addtask.AddTaskActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="24dp"
+            android:text="Tambah Tugas"
+            android:textColor="#4A74A5"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- Task -->
+        <EditText
+            android:id="@+id/editTextTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/darker_gray"
+            android:backgroundTint="#EEF2F7"
+            android:hint="Task"
+            android:padding="16dp"
+            android:textColorHint="#4A74A5" />
+
+        <!-- Deskripsi -->
+        <EditText
+            android:id="@+id/editTextDeskripsi"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/darker_gray"
+            android:backgroundTint="#EEF2F7"
+            android:gravity="top"
+            android:hint="Deskripsi Detail"
+            android:padding="16dp"
+            android:textColorHint="#4A74A5" />
+
+        <!-- Tanggal -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@android:color/darker_gray"
+            android:backgroundTint="#EEF2F7"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/editTextTanggal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:hint="Tanggal"
+                android:inputType="none"
+                android:textColorHint="#4A74A5" />
+
+            <ImageView
+                android:id="@+id/iconDatePicker"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="12dp"
+                android:src="@android:drawable/ic_menu_my_calendar"
+                android:tint="#4285F4"
+                tools:ignore="UseAppTint" />
+        </LinearLayout>
+
+        <!-- Button Simpan -->
+        <Button
+            android:id="@+id/buttonSimpan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#5B6E99"
+            android:padding="12dp"
+            android:text="Simpan"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Tema yang tepat untuk menggunakan komponen Material -->
+    <style name="Theme.TaskManager" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+
+</resources>
