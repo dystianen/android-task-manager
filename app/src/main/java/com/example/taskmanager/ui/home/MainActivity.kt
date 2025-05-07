@@ -4,13 +4,13 @@ import VerticalSpaceItemDecoration
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskmanager.R
 import com.example.taskmanager.data.model.Task
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.taskmanager.ui.editTask.EditTaskActivity
 import com.example.taskmanager.ui.addtask.AddTaskActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.LocalDate
@@ -35,16 +35,25 @@ class MainActivity : AppCompatActivity() {
         val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("id", "ID"))
 
         taskList = listOf(
-            Task(1, "Beli bahan presentasi", "kdjkdjdkjkd", LocalDate.parse("3 Mei 2025", formatter), true),
+            Task(1, "Beli bahan presentasi", "kdjkdjdkjkd", LocalDate.parse("3 Mei 2025", formatter), false),
             Task(2, "Kerjakan laporan KP", "kdjkdjdkjdd", LocalDate.parse("4 Mei 2025", formatter), false),
-            Task(3, "Beli bahan baku", "kdjkdjdkjkd", LocalDate.parse("5 Mei 2025", formatter), true),
+            Task(3, "Beli bahan baku", "kdjkdjdkjkd", LocalDate.parse("5 Mei 2025", formatter), false),
         )
 
         recyclerView = findViewById(R.id.recyclerViewTasks)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        taskAdapter = TaskAdapter { task ->
-            Toast.makeText(this, "Klik: ${task.title}", Toast.LENGTH_SHORT).show()
-        }
+        taskAdapter = TaskAdapter(
+            onItemClick = { task ->
+                val intent = Intent(this, EditTaskActivity::class.java).apply {
+                    putExtra("task_id", task.id)
+                    putExtra("title", task.title)
+                    putExtra("description", task.description)
+                    putExtra("date", task.date.toString())
+                }
+                editTaskLauncher.launch(intent)
+            },
+            onStarClicked = { task -> toggleStar(task) }
+        )
         recyclerView.adapter = taskAdapter
 
         val spacingInDp = 2
@@ -148,11 +157,23 @@ class MainActivity : AppCompatActivity() {
 
             // Otomatis filter berdasarkan tanggal update
             when {
-                date < LocalDate.now() -> filterTasksBeforeToday()
-                date == LocalDate.now() -> filterTasksForToday()
+                date < today  -> filterTasksBeforeToday()
+                date == today  -> filterTasksForToday()
                 else -> filterTasksAfterToday()
             }
         }
     }
 
+    private fun toggleStar(task: Task) {
+        taskList = taskList.map {
+            if (it.id == task.id) it.copy(isStarred = !it.isStarred) else it
+        }
+
+        // Sorting: starred items at the top
+        val sortedList = taskList.sortedWith(
+            compareByDescending<Task> { it.isStarred }.thenBy { it.date }
+        )
+
+        taskAdapter.submitList(sortedList)
+    }
 }

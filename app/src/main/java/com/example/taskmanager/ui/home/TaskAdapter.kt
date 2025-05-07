@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.taskmanager.R
 import com.example.taskmanager.data.model.Task
 import java.time.LocalDate
+import android.content.Intent
 
 class TaskAdapter(
-    private val onItemClick: (Task) -> Unit
+    private val onItemClick: (Task) -> Unit,
+    private val onStarClicked: (Task) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     private var taskList: List<Task> = emptyList()
@@ -52,25 +54,15 @@ class TaskAdapter(
         holder.container.setBackgroundColor(Color.parseColor(bgColor))
 
         holder.star.setImageResource(
-            if (task.isImportant) R.drawable.ic_star_filled else R.drawable.ic_star_border
+            if (task.isStarred) R.drawable.ic_star_filled else R.drawable.ic_star_border
         )
+
+        holder.star.setOnClickListener {
+            onStarClicked(task)
+        }
 
         holder.itemView.setOnClickListener {
             onItemClick(task)
         }
-    }
-
-    private fun onItemClick(task: Task) {
-        taskAdapter = TaskAdapter(
-            onItemClick = { task ->
-                val intent = Intent(this, EditTaskActivity::class.java)
-                intent.putExtra("task_id", task.id)
-                intent.putExtra("title", task.title)
-                intent.putExtra("description", task.description)
-                intent.putExtra("date", task.date.toString())
-                editTaskLauncher.launch(intent)
-            }
-        )
-
     }
 }
