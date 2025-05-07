@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.taskmanager.R
 
 class EditTaskActivity : AppCompatActivity() {
+    private lateinit var vtTitle: TextView
     private lateinit var etTitle: EditText
     private lateinit var etDescription: EditText
     private lateinit var etDate: TextView
@@ -18,11 +19,13 @@ class EditTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_task)
 
+        vtTitle = findViewById(R.id.tvTitle);
         etTitle = findViewById(R.id.etTaskName)
         etDescription = findViewById(R.id.etTaskDescription)
         etDate = findViewById(R.id.etDate)
 
         // Load data from intent
+        vtTitle.setText(intent.getStringExtra("title"))
         taskId = intent.getIntExtra("task_id", -1)
         etTitle.setText(intent.getStringExtra("title"))
         etDescription.setText(intent.getStringExtra("description"))
