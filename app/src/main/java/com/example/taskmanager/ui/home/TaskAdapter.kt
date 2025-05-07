@@ -48,8 +48,8 @@ class TaskAdapter(
         val today = LocalDate.now()
         val bgColor = when {
             task.date < today -> "#FBC7C7" // merah muda
-            task.date == today -> "#AAF6D0" // hijau muda
-            else -> "#FDF0C4" // kuning muda
+            task.date == today -> "#FDF0C4" // kuning muda
+            else -> "#AAF6D0" // hijau muda
         }
         holder.container.setBackgroundColor(Color.parseColor(bgColor))
 

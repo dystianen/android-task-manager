@@ -21,10 +21,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var taskAdapter: TaskAdapter
     private lateinit var taskList: List<Task>
-
     private lateinit var btnKemarin: Button
     private lateinit var btnHariIni: Button
     private lateinit var btnBesok: Button
+
+    enum class FilterType { KEMARIN, HARI_INI, BESOK }
+    private var currentFilter: FilterType = FilterType.HARI_INI
 
     private val today: LocalDate = LocalDate.now()
 
@@ -100,19 +102,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun filterTasksBeforeToday() {
+        currentFilter = FilterType.KEMARIN
         val filtered = taskList.filter { it.date < today }
+            .sortedWith(compareByDescending<Task> { it.isStarred }.thenBy { it.date })
         taskAdapter.submitList(filtered)
         updateButtonState(btnKemarin)
     }
 
     private fun filterTasksForToday() {
+        currentFilter = FilterType.HARI_INI
         val filtered = taskList.filter { it.date == today }
+            .sortedWith(compareByDescending<Task> { it.isStarred }.thenBy { it.date })
         taskAdapter.submitList(filtered)
         updateButtonState(btnHariIni)
     }
 
     private fun filterTasksAfterToday() {
+        currentFilter = FilterType.BESOK
         val filtered = taskList.filter { it.date > today }
+            .sortedWith(compareByDescending<Task> { it.isStarred }.thenBy { it.date })
         taskAdapter.submitList(filtered)
         updateButtonState(btnBesok)
     }
@@ -169,11 +177,11 @@ class MainActivity : AppCompatActivity() {
             if (it.id == task.id) it.copy(isStarred = !it.isStarred) else it
         }
 
-        // Sorting: starred items at the top
-        val sortedList = taskList.sortedWith(
-            compareByDescending<Task> { it.isStarred }.thenBy { it.date }
-        )
-
-        taskAdapter.submitList(sortedList)
+        // Apply filter ulang sesuai filter aktif
+        when (currentFilter) {
+            FilterType.KEMARIN -> filterTasksBeforeToday()
+            FilterType.HARI_INI -> filterTasksForToday()
+            FilterType.BESOK -> filterTasksAfterToday()
+        }
     }
 }
